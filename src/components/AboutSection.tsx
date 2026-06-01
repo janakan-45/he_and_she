@@ -3,45 +3,51 @@ import { useEffect, useRef } from 'react';
 function AboutCanvas({ idx }: { idx: number }) {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
-    const c = ref.current;
-    if (!c) return;
-    const ctx = c.getContext('2d')!;
-    c.width = c.offsetWidth || 400;
-    c.height = c.offsetHeight || 500;
-    const w = c.width, h = c.height;
-    const bg = ctx.createLinearGradient(0, 0, w, h);
-    if (idx === 0) {
-      bg.addColorStop(0, '#1a1520');
-      bg.addColorStop(1, '#0a0a0a');
-    } else {
-      bg.addColorStop(0, '#1a1020');
-      bg.addColorStop(1, '#0d0d0d');
-    }
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, w, h);
-    const cx = w / 2, cy = h * 0.55;
-    const grd = ctx.createLinearGradient(cx - 60, cy - 120, cx + 60, cy + 200);
-    grd.addColorStop(0, idx === 0 ? '#C9A84C' : '#E07B39');
-    grd.addColorStop(1, idx === 0 ? '#9A7A30' : '#8B4513');
-    ctx.fillStyle = grd;
-    ctx.beginPath();
-    ctx.moveTo(cx - 15, cy - 80);
-    ctx.bezierCurveTo(cx - 40, cy - 40, cx - 55, cy + 20, cx - 60, cy + h * 0.35);
-    ctx.lineTo(cx + 60, cy + h * 0.35);
-    ctx.bezierCurveTo(cx + 55, cy + 20, cx + 40, cy - 40, cx + 15, cy - 80);
-    ctx.closePath();
-    ctx.fill();
-    ctx.fillStyle = idx === 0 ? '#C9A84C' : '#E07B39';
-    ctx.beginPath();
-    ctx.ellipse(cx, cy - 110, 18, 36, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = '#FFDBB5';
-    ctx.beginPath();
-    ctx.ellipse(cx, cy - 155, 20, 26, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.strokeStyle = idx === 0 ? 'rgba(201,168,76,0.3)' : 'rgba(224,123,57,0.3)';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(8, 8, w - 16, h - 16);
+    const draw = () => {
+      const c = ref.current;
+      if (!c) return;
+      const ctx = c.getContext('2d')!;
+      c.width = c.offsetWidth || 400;
+      c.height = c.offsetHeight || 500;
+      const w = c.width, h = c.height;
+      const bg = ctx.createLinearGradient(0, 0, w, h);
+      if (idx === 0) {
+        bg.addColorStop(0, '#1a1520');
+        bg.addColorStop(1, '#0a0a0a');
+      } else {
+        bg.addColorStop(0, '#1a1020');
+        bg.addColorStop(1, '#0d0d0d');
+      }
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, w, h);
+      const cx = w / 2, cy = h * 0.55;
+      const grd = ctx.createLinearGradient(cx - 60, cy - 120, cx + 60, cy + 200);
+      grd.addColorStop(0, idx === 0 ? '#C9A84C' : '#E07B39');
+      grd.addColorStop(1, idx === 0 ? '#9A7A30' : '#8B4513');
+      ctx.fillStyle = grd;
+      ctx.beginPath();
+      ctx.moveTo(cx - 15, cy - 80);
+      ctx.bezierCurveTo(cx - 40, cy - 40, cx - 55, cy + 20, cx - 60, cy + h * 0.35);
+      ctx.lineTo(cx + 60, cy + h * 0.35);
+      ctx.bezierCurveTo(cx + 55, cy + 20, cx + 40, cy - 40, cx + 15, cy - 80);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = idx === 0 ? '#C9A84C' : '#E07B39';
+      ctx.beginPath();
+      ctx.ellipse(cx, cy - 110, 18, 36, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#FFDBB5';
+      ctx.beginPath();
+      ctx.ellipse(cx, cy - 155, 20, 26, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = idx === 0 ? 'rgba(201,168,76,0.3)' : 'rgba(224,123,57,0.3)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(8, 8, w - 16, h - 16);
+    };
+
+    draw();
+    window.addEventListener('resize', draw);
+    return () => window.removeEventListener('resize', draw);
   }, [idx]);
   return <canvas ref={ref} style={{ width: '100%', height: '100%', display: 'block' }} />;
 }

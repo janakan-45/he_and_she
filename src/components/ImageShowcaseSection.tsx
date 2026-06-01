@@ -214,19 +214,22 @@ export default function ImageShowcaseSection() {
             </div>
           </div>
 
-          {/* Thumbnail Strip */}
-          <div className="showcase-thumb-strip">
-            {SHOWCASE_ITEMS.map((item, i) => (
-              <div
-                key={i}
-                className={`showcase-thumb${selectedItem === i ? ' active' : ''}`}
-                onClick={() => { setSelectedItem(i); setSelectedView(0); }}
-                title={item.name}
-              >
-                <img src={item.views[0].img} alt={item.name} />
-                <div className="thumb-color-dot" style={{ background: item.primaryColor }} />
-              </div>
-            ))}
+          {/* Showcase Panel Footer */}
+          <div className="showcase-panel-footer">
+            {/* Thumbnail Strip */}
+            <div className="showcase-thumb-strip">
+              {SHOWCASE_ITEMS.map((item, i) => (
+                <div
+                  key={i}
+                  className={`showcase-thumb${selectedItem === i ? ' active' : ''}`}
+                  onClick={() => { setSelectedItem(i); setSelectedView(0); }}
+                  title={item.name}
+                >
+                  <img src={item.views[0].img} alt={item.name} />
+                  <div className="thumb-color-dot" style={{ background: item.primaryColor }} />
+                </div>
+              ))}
+            </div>
 
             <div className="showcase-dress-info">
               <div className="showcase-select-label">SELECTED</div>

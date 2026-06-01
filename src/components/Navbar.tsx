@@ -13,20 +13,28 @@ export default function Navbar() {
 
   return (
     <nav>
+      {/* Backdrop for mobile menu */}
+      <div className={`nav-backdrop-menu${menuOpen ? ' open' : ''}`} onClick={() => setMenuOpen(false)} />
+
       {/* Business Logo */}
       <a href="#home" className="nav-logo-img" onClick={e => { e.preventDefault(); scrollTo('home'); }}>
         <img src={logo} alt="He & She Fashions" />
       </a>
 
-      <ul className="nav-links" style={menuOpen ? {
-        display: 'flex', flexDirection: 'column', position: 'fixed',
-        top: '60px', left: 0, right: 0, background: '#111', padding: '24px', gap: '20px', zIndex: 999
-      } : {}}>
+      <ul className={`nav-links${menuOpen ? ' open' : ''}`}>
+        {/* Mobile menu header */}
+        <li className="nav-mobile-header">
+          <span>Menu</span>
+          <button className="nav-mobile-close" onClick={() => setMenuOpen(false)}>✕</button>
+        </li>
         <li><a href="#collections" onClick={e => { e.preventDefault(); scrollTo('collections'); }}>Collections</a></li>
         <li><a href="#showcase" onClick={e => { e.preventDefault(); scrollTo('showcase'); }}>Gallery</a></li>
         <li><a href="#products" onClick={e => { e.preventDefault(); scrollTo('products'); }}>Shop</a></li>
         <li><a href="#about" onClick={e => { e.preventDefault(); scrollTo('about'); }}>About</a></li>
         <li><a href="#contact" onClick={e => { e.preventDefault(); scrollTo('contact'); }}>Contact</a></li>
+        <li className="nav-mobile-cta">
+          <button className="btn-primary" onClick={() => scrollTo('contact')} style={{ width: '100%', cursor: 'pointer' }}>Book Appointment</button>
+        </li>
       </ul>
 
       <div className="nav-actions">
@@ -51,5 +59,4 @@ export default function Navbar() {
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>☰</button>
       </div>
     </nav>
-  );
-}
+  );}
